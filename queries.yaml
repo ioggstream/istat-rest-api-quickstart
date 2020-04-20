@@ -1,0 +1,49 @@
+queries:
+- label: Produzione Industriale con e senza correzioni
+  url: >-
+    GET /SDMXWS/rest/data/115_333/..N+Y..?startPeriod=2019-10&endPeriod=2019-12
+  query:
+    key:
+      ADJUSTMENT:
+      - "N"
+      - "Y"
+    params:
+      endPeriod: 2019-12
+      startPeriod: 2019-10
+    resource_id: '115_333'
+- label: Produzione Industriale senza correzioni
+  url: >-
+    GET /SDMXWS/rest/data/115_333/..N..?startPeriod=2019-10&endPeriod=2019-12
+  query:
+    key:
+      ADJUSTMENT: "N"
+    params:
+      endPeriod: 2019-12
+      startPeriod: 2019-10
+    resource_id: '115_333'
+- label:  Produzione Industriale solo IND_PROD2 dal 2000
+  url: >-
+    GET /SDMXWS/rest/data/115_333?detail=serieskeysonly
+    GET /SDMXWS/rest/data/115_333/..N..IND_PROD2?startPeriod=2019-10&endPeriod=2019-12
+  query:
+    key:
+      ADJUSTMENT: "N"
+      IND: IND_PROD2
+    params:
+      endPeriod: 2019-12
+      startPeriod: 2000-10
+    resource_id: '115_333'
+- label:  Produzione Industriale solo IND_PROD2 dal 2000 solo ATECO 0020
+  url: >-
+    GET /SDMXWS/rest/data/115_333?detail=serieskeysonly
+    GET /SDMXWS/rest/data/115_333/.0020.N..IND_PROD2?startPeriod=2000-01&endPeriod=2019-12
+  query:
+    key:
+      ADJUSTMENT: "N"
+      IND: IND_PROD2
+      ATECO_2007: "0020"
+    params:
+      endPeriod: 2019-12
+      startPeriod: 2000-10
+    resource_id: '115_333'
+
