@@ -47,6 +47,14 @@ version = "0.4.3"
 
 [[package]]
 category = "main"
+description = "Decorators for Humans"
+name = "decorator"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*"
+version = "4.4.2"
+
+[[package]]
+category = "main"
 description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
 optional = false
@@ -68,6 +76,19 @@ zipp = ">=0.5"
 [package.extras]
 docs = ["sphinx", "rst.linker"]
 testing = ["packaging", "importlib-resources"]
+
+[[package]]
+category = "main"
+description = "A robust and significantly extended implementation of JSONPath for Python, with a clear AST for metaprogramming."
+name = "jsonpath-rw"
+optional = false
+python-versions = "*"
+version = "1.4.0"
+
+[package.dependencies]
+decorator = "*"
+ply = "*"
+six = "*"
 
 [[package]]
 category = "main"
@@ -120,26 +141,20 @@ category = "main"
 description = ""
 name = "pandaSDMX"
 optional = false
-python-versions = ">=3.7"
-version = "1.0.0b2"
+python-versions = "*"
+version = "0.9"
 
 [package.dependencies]
-lxml = ">=3.6"
-pandas = ">=0.20"
-pydantic = ">=1.1"
-requests = ">=2.7"
-setuptools = ">19"
-
-[package.extras]
-cache = ["requests-cache"]
-docs = ["sphinx (>=1.5)", "ipython"]
-tests = ["pytest (>=3.3)", "pytest-remotedata (>=0.3.1)", "requests-mock (>=1.4)"]
+jsonpath-rw = "*"
+lxml = "*"
+pandas = "*"
+requests = "*"
+setuptools = "*"
 
 [package.source]
 reference = ""
 type = "url"
-url = "https://github.com/dr-leo/pandaSDMX/archive/v1.0.0b2.zip"
-
+url = "https://github.com/ioggstream/pandaSDMX/archive/0.9-fix-istat.zip"
 [[package]]
 category = "dev"
 description = "plugin and hook calling mechanisms for python"
@@ -157,25 +172,20 @@ version = ">=0.12"
 dev = ["pre-commit", "tox"]
 
 [[package]]
+category = "main"
+description = "Python Lex & Yacc"
+name = "ply"
+optional = false
+python-versions = "*"
+version = "3.11"
+
+[[package]]
 category = "dev"
 description = "library with cross-python path, ini-parsing, io, code, log facilities"
 name = "py"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.8.1"
-
-[[package]]
-category = "main"
-description = "Data validation and settings management using python 3.6 type hinting"
-name = "pydantic"
-optional = false
-python-versions = ">=3.6"
-version = "1.5"
-
-[package.extras]
-dotenv = ["python-dotenv (>=0.10.4)"]
-email = ["email-validator (>=1.0.3)"]
-typing_extensions = ["typing-extensions (>=3.7.2)"]
 
 [[package]]
 category = "dev"
@@ -275,7 +285,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "a6c32818e55eb6993a1f7e898c3324bca8b679b8ccc89dcc254c5abb20b38cb5"
+content-hash = "ae0738540ceb1120eb93452d015b93a0748cdff1343568690a5a07665a4b20d0"
 python-versions = "3.7"
 
 [metadata.files]
@@ -299,6 +309,10 @@ colorama = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
     {file = "colorama-0.4.3.tar.gz", hash = "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"},
 ]
+decorator = [
+    {file = "decorator-4.4.2-py2.py3-none-any.whl", hash = "sha256:41fa54c2a0cc4ba648be4fd43cff00aedf5b9465c9bf18d64325bc225f08f760"},
+    {file = "decorator-4.4.2.tar.gz", hash = "sha256:e3a62f0520172440ca0dcc823749319382e377f37f140a0b99ef45fecb84bfe7"},
+]
 idna = [
     {file = "idna-2.9-py2.py3-none-any.whl", hash = "sha256:a068a21ceac8a4d63dbfd964670474107f541babbd2250d61922f029858365fa"},
     {file = "idna-2.9.tar.gz", hash = "sha256:7588d1c14ae4c77d74036e8c22ff447b26d0fde8f007354fd48a7814db15b7cb"},
@@ -306,6 +320,9 @@ idna = [
 importlib-metadata = [
     {file = "importlib_metadata-1.6.0-py2.py3-none-any.whl", hash = "sha256:2a688cbaa90e0cc587f1df48bdc97a6eadccdcd9c35fb3f976a09e3b5016d90f"},
     {file = "importlib_metadata-1.6.0.tar.gz", hash = "sha256:34513a8a0c4962bc66d35b359558fd8a5e10cd472d37aec5f66858addef32c1e"},
+]
+jsonpath-rw = [
+    {file = "jsonpath-rw-1.4.0.tar.gz", hash = "sha256:05c471281c45ae113f6103d1268ec7a4831a2e96aa80de45edc89b11fac4fbec"},
 ]
 lxml = [
     {file = "lxml-4.5.0-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:0701f7965903a1c3f6f09328c1278ac0eee8f56f244e66af79cb224b7ef3801c"},
@@ -386,28 +403,13 @@ pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
     {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
 ]
+ply = [
+    {file = "ply-3.11-py2.py3-none-any.whl", hash = "sha256:096f9b8350b65ebd2fd1346b12452efe5b9607f7482813ffca50c22722a807ce"},
+    {file = "ply-3.11.tar.gz", hash = "sha256:00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3"},
+]
 py = [
     {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
     {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
-]
-pydantic = [
-    {file = "pydantic-1.5-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:9af44d06db33896a2176603c9cb876df3a60297a292a24d3018956a910cc1402"},
-    {file = "pydantic-1.5-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:3c0f39e884d7a3572d5cc8322b0fe9bf66114283e22e05a5c4b8961c19588945"},
-    {file = "pydantic-1.5-cp36-cp36m-manylinux2014_i686.whl", hash = "sha256:d73070028f7b046a5b2e611a9799c238d7bd245f8fe30f4ad7ff29ddb63aac40"},
-    {file = "pydantic-1.5-cp36-cp36m-manylinux2014_x86_64.whl", hash = "sha256:ddedcdf9d5c24939578449a8e099ceeec3b3d76243fc143aff63ebf6d5aade10"},
-    {file = "pydantic-1.5-cp36-cp36m-win_amd64.whl", hash = "sha256:e6239199b363bc53262bcb57f1441206d4b2d46b392eccba2213d8358d6e284a"},
-    {file = "pydantic-1.5-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:20946280c750753b3e3177c748825ef189d7ab86c514f6a0b118621110d5f0d3"},
-    {file = "pydantic-1.5-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:475e6606873e40717cc3b0eebc7d1101cbfc774e01dadeeea24c121eb5826b86"},
-    {file = "pydantic-1.5-cp37-cp37m-manylinux2014_i686.whl", hash = "sha256:0f61e67291b99a927816558a218a4e794db72a33621c836e63d12613a2202cd4"},
-    {file = "pydantic-1.5-cp37-cp37m-manylinux2014_x86_64.whl", hash = "sha256:22139ee446992c222977ac0a9269c4da2e9ecc1834f84804ebde008a4649b929"},
-    {file = "pydantic-1.5-cp37-cp37m-win_amd64.whl", hash = "sha256:0b7aadfa1de28057656064e04d9f018d1b186fe2a8e953a2fb41545873b7cf95"},
-    {file = "pydantic-1.5-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:896637b7d8e4cdc0bcee1704fcadacdd167c35ac29f02a4395fce7a033925f26"},
-    {file = "pydantic-1.5-cp38-cp38-manylinux1_i686.whl", hash = "sha256:b11d0bd7ecf41098894e8777ee623c29554dbaa37e862c51bcc5a2b950d1bf77"},
-    {file = "pydantic-1.5-cp38-cp38-manylinux2014_i686.whl", hash = "sha256:9e46fac8a4674db0777fd0133aa56817e1481beee50971bab39dded7639f9b2b"},
-    {file = "pydantic-1.5-cp38-cp38-manylinux2014_x86_64.whl", hash = "sha256:ae206e103e976c40ec294cd6c8fcbfbdaced3ab9b736bc53d03fa11b5aaa1628"},
-    {file = "pydantic-1.5-cp38-cp38-win_amd64.whl", hash = "sha256:66124752662de0479a9d0c17bdebdc8a889bccad8846626fb66d8669e8eafb63"},
-    {file = "pydantic-1.5-py36.py37.py38-none-any.whl", hash = "sha256:e08e21f4d5395ac17cde19de26be63fb16fb870f0cfde1481ddc22d5e2353548"},
-    {file = "pydantic-1.5.tar.gz", hash = "sha256:446ce773a552a2cb90065d4aa645e16fa7494369b5f0d199e4d41a992a98204d"},
 ]
 pytest = [
     {file = "pytest-3.10.1-py2.py3-none-any.whl", hash = "sha256:3f193df1cfe1d1609d4c583838bea3d532b18d6160fd3f55c9447fdca30848ec"},

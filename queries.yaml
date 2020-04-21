@@ -3,6 +3,7 @@ queries:
   url: >-
     GET /SDMXWS/rest/data/115_333/..N+Y..?startPeriod=2019-10&endPeriod=2019-12
   query:
+    agency: IT1
     key:
       ADJUSTMENT:
       - "N"
@@ -15,6 +16,7 @@ queries:
   url: >-
     GET /SDMXWS/rest/data/115_333/..N..?startPeriod=2019-10&endPeriod=2019-12
   query:
+    agency: IT1
     key:
       ADJUSTMENT: "N"
     params:
@@ -26,6 +28,7 @@ queries:
     GET /SDMXWS/rest/data/115_333?detail=serieskeysonly
     GET /SDMXWS/rest/data/115_333/..N..IND_PROD2?startPeriod=2019-10&endPeriod=2019-12
   query:
+    agency: IT1
     key:
       ADJUSTMENT: "N"
       IND: IND_PROD2
@@ -38,6 +41,7 @@ queries:
     GET /SDMXWS/rest/data/115_333?detail=serieskeysonly
     GET /SDMXWS/rest/data/115_333/.0020.N..IND_PROD2?startPeriod=2000-01&endPeriod=2019-12
   query:
+    agency: IT1
     key:
       ADJUSTMENT: "N"
       IND: IND_PROD2

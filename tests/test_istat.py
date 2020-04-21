@@ -43,8 +43,8 @@ def test_get_all_dataflows(istat):
 
 
 def test_get_one_dataflow(istat):
-    dflow = istat.dataflow(resource_id="115_333", version="1.2")
-    i_stat_code = next(iter(dflow.structure))
+    dflow = istat.dataflow(resource_id="115_333", agency="IT1", version="1.2")
+    i_stat_code = next(iter(dflow.datastructure))
     assert i_stat_code == "DCSC_INDXPRODIND_1"
 
 
@@ -52,39 +52,26 @@ def test_data_to_file(istat):
     # Get data filtering per-period: don't specify version here!
     # GET /SDMXWS/rest/data/115_333/?startPeriod=2019-10
     res = istat.data(
-        resource_id="115_333", params={"startPeriod": "2020"}
+        resource_id="115_333", agency="IT1", params={"startPeriod": "2020"}
     )
     # dump data to a file
     res.write_source(filename="out.xml")
     assert Path("out.xml").is_file()
 
 
-def test_data_queries(istat):
+def param_queries():
     queries = yaml.safe_load(Path("queries.yaml").read_text())
-    queries = queries["queries"]
-    for q in queries:
-        df = get_dataset(istat, q['query'])
-        assert not df.empty
+    return queries["queries"]
 
 
-def report(df):
-    series = list(df.series)
-
-    return {
-        "sample": "\n".join(str(series[i].key) for i in range(10)),
-        "#series": len(series),
-        "keys_FREQ": set(s.key.FREQ for s in series),
-        "fields": set(
-            x
-            for s in series
-            for x in s.key.__dir__()
-            if x[0] == x[0].upper() and x[0] != "_"
-        ),
-    }
+@pytest.mark.parametrize("query", param_queries())
+def test_data_queries(istat, query):
+    df = get_dataset(istat, query["query"])
+    assert not df.empty
 
 
 def test_flatten(istat):
-    query = dict(resource_id="115_333", params={"startPeriod": "2020"})
+    query = dict(resource_id="115_333", agency="IT1", params={"startPeriod": "2020"})
     df = get_dataset(client=istat, query=query)
     data = flatten_data(df)
     ipi_dump_data(data)

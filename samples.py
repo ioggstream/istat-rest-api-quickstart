@@ -5,6 +5,9 @@ Each ISTAT dataset is associated to a dataflow.
 """
 import pandas as pd
 from pandasdmx import Request
+import logging
+
+log = logging.getLogger()
 
 
 def get_dataflows(client, label=None) -> list:
@@ -37,9 +40,10 @@ def get_dataset(client, query) -> pd.DataFrame:
 
     :return:
     """
-    # Ensure agency is Istat. Remember, this
-    # is just a sample code :)
-    # query["agency"] = "IT1"
+    # as of today 2020-04-20 ISTAT SDMX REST endpoint requires
+    # the agency to be present
+    if "agency" not in query:
+        log.warning("If this query does not succeed, try to add the agency param")
 
     res = client.data(**query)
     # Parse the response to data frame
@@ -92,3 +96,19 @@ def get_produzione_industriale_dal_2000():
     )
     data = flatten_data(df)
     ipi_dump_data(data)
+
+
+def report(df):
+    series = list(df.series)
+
+    return {
+        "sample": "\n".join(str(series[i].key) for i in range(10)),
+        "#series": len(series),
+        "keys_FREQ": set(s.key.FREQ for s in series),
+        "fields": set(
+            x
+            for s in series
+            for x in s.key.__dir__()
+            if x[0] == x[0].upper() and x[0] != "_"
+        ),
+    }

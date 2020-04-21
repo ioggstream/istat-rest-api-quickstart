@@ -6,8 +6,8 @@ authors = ["Roberto Polli <robipolli@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "3.7"
-pandasdmx = {url = "https://github.com/dr-leo/pandaSDMX/archive/v1.0.0b2.zip"}
 pyyaml = "^5.3.1"
+pandasdmx = {url = "https://github.com/ioggstream/pandaSDMX/archive/0.9-fix-istat.zip"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.4"
