@@ -19,3 +19,12 @@ See the spec here [sdmx-rest.yaml](sdmx-rest.yaml)
 
 In [tests](tests/test_istat.py) you can check usage examples while retrieving
 files using pandasdmx.
+
+
+## Test
+
+Run tests via:
+
+```
+tox
+```

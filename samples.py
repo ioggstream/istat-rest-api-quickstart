@@ -17,7 +17,7 @@ def get_dataflows(client, label=None) -> list:
     dataflows = client.dataflow()
     return [
         (v.structure.id, k)
-        for k, v in dataflows.msg.dataflow.items()
+        for k, v in dataflows.dataflow.items()
         if not label or v.structure.id == label
     ]
 
@@ -39,7 +39,7 @@ def get_dataset(client, query) -> pd.DataFrame:
     """
     # Ensure agency is Istat. Remember, this
     # is just a sample code :)
-    query["agency"] = "IT1"
+    # query["agency"] = "IT1"
 
     res = client.data(**query)
     # Parse the response to data frame
@@ -86,7 +86,6 @@ def get_produzione_industriale_dal_2000():
         client=istat,
         query={
             "resource_id": "115_333",
-            "agency": "IT1",
             "params": {"startPeriod": "2000-01"},
             "key": {"ADJUSTMENT": ["N", "Y"], "IND": "IND_PROD2"},
         },

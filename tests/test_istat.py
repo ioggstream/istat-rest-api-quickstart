@@ -17,7 +17,7 @@ requests_log.propagate = True
 log = logging.getLogger()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 def istat():
     return Request("ISTAT")
 
@@ -28,7 +28,7 @@ def teardown_function():
         f.unlink()
 
 
-def test_dataflows(istat):
+def test_get_all_dataflows(istat):
     # Datasets in the ISTAT portal have different labels
     #   from the sdmx dataflows. You can look for
     #   the dataflow from the istat website http://sdmx.istat.it/sdmxMetaRepository/DataFlow.aspx?m=y
@@ -42,10 +42,9 @@ def test_dataflows(istat):
     assert dataflows
 
 
-def test_dataflow(istat):
-    # Get a single dataflow
-    dflow = istat.dataflow(resource_id="115_333", agency="IT1", version="1.2")
-    i_stat_code = list(dflow.msg.datastructure.keys())[0]
+def test_get_one_dataflow(istat):
+    dflow = istat.dataflow(resource_id="115_333", version="1.2")
+    i_stat_code = next(iter(dflow.structure))
     assert i_stat_code == "DCSC_INDXPRODIND_1"
 
 
@@ -53,7 +52,7 @@ def test_data_to_file(istat):
     # Get data filtering per-period: don't specify version here!
     # GET /SDMXWS/rest/data/115_333/?startPeriod=2019-10
     res = istat.data(
-        resource_id="115_333", agency="IT1", params={"startPeriod": "2020"}
+        resource_id="115_333", params={"startPeriod": "2020"}
     )
     # dump data to a file
     res.write_source(filename="out.xml")
@@ -85,7 +84,7 @@ def report(df):
 
 
 def test_flatten(istat):
-    query = dict(resource_id="115_333", agency="IT1", params={"startPeriod": "2020"})
+    query = dict(resource_id="115_333", params={"startPeriod": "2020"})
     df = get_dataset(client=istat, query=query)
     data = flatten_data(df)
     ipi_dump_data(data)
