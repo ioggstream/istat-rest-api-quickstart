@@ -16,16 +16,29 @@ ISTAT endpoint provides REST apis returning output in:
 
 See the spec here [sdmx-rest.yaml](sdmx-rest.yaml)
 
-NOTE: this repo uses a patched version of `panda`
 ## Example usage
 
-In [tests](tests/test_istat.py) you can check usage examples while retrieving
-files using pandasdmx.
+A 3-minute tutorial is in [quickstart.py](quickstart.py).
+
+The other files contain slightly more complex queries and processing samples:
+
+- [samples.py](samples.py) has some functions that shows how to extract
+  common data from the repo.
+- [tests](tests/test_istat.py) you can check usage examples while retrieving
+  information and test different queries.
+- [queries.yaml](queries.yaml) has some query examples with their HTTP 
+  counterparts.
 
 
 ## Test
 
-Run tests via:
+Run tests via docker with:
+
+```
+docker-compose up
+```
+
+Or if you have a python 3.7+ with `tox` and `poetry` use:
 
 ```
 tox
