@@ -1,6 +1,7 @@
 from pandasdmx import Request
-import pandasdmx as sdmx
 from pathlib import Path
+import pytest
+import yaml
 
 # Show http traces.
 import http.client as http_client
@@ -16,16 +17,17 @@ requests_log.propagate = True
 log = logging.getLogger()
 
 
-istat = Request("ISTAT")
-res = istat.data(
-    #    agency="IT1",
-    resource_id="115_333",
-    params={"startPeriod": "2000"},
-    key={"ADJUSTMENT": ["N", "Y"]},
-)
+@pytest.fixture()
+def istat():
+    return Request("ISTAT")
 
 
-def sdmx_devel():
-    df = istat.data(resource_id="122_54", params={"startPeriod": "2019-01"},)
-    pdf = smdx.to_pandas(df)
-    pdf = smdx.to_pandas(df)
+def test_datastructure(istat):
+    ret = istat.datastructure()
+    assert "DCAR_ATT_NOTAR" in ret.structure
+
+
+def test_dataflow(istat):
+    ret = istat.dataflow()
+    assert "101_1015" in ret.dataflow
+    assert "DCSP_COLTIVAZIONI" in ret.dataflow["101_1015"]

@@ -6,6 +6,7 @@ Each ISTAT dataset is associated to a dataflow.
 import pandas as pd
 from pandasdmx import Request
 import logging
+import csv
 
 log = logging.getLogger()
 
@@ -76,12 +77,14 @@ def flatten_data(df):
             yield (f"{period}",) + k + (v,)
 
 
-def ipi_dump_data(data):
-    import csv
-
-    with open("istat_ipi.csv", "wt") as fh:
-        writer = csv.writer(fh)
+def to_csv(data, fpath):
+    with open(fpath, "wt") as fh:
+        writer = csv.writer(fh, delimiter="\t")
         writer.writerows(data)
+
+
+def ipi_dump_data(data):
+    to_csv(data, "istat_ipi.csv")
 
 
 def get_produzione_industriale_dal_2000():
@@ -112,3 +115,13 @@ def report(df):
             if x[0] == x[0].upper() and x[0] != "_"
         ),
     }
+
+
+def get_presenze_estero():
+    df = sdmx.to_pandas(
+        istat.data(
+            resource_id="122_54",
+            key={"ADJUSTMENT": "N", "PAESE_RES": "WRL_X_ITA"},
+            params={"startPeriod": "2000-01", "endPeriod": "2000-02"},
+        )
+    )
