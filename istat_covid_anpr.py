@@ -10,26 +10,26 @@ dest = z.extract(next(x for x in z.filelist if x.filename.endswith(".xlsx")))
 df = pd.read_excel(dest)
 
 cols_to_sum = [
-    "MALES_2015",
-    "MALES_2016",
-    "MALES_2017",
-    "MALES_2018",
-    "MALES_2019",
-    "MALES_2020",
-    "FEMALE_2015",
-    "FEMALE_2016",
-    "FEMALE_2017",
-    "FEMALE_2018",
-    "FEMALE_2019",
-    "FEMALE_2020",
-    "TOTAL_2015",
-    "TOTAL_2016",
-    "TOTAL_2017",
-    "TOTAL_2018",
-    "TOTAL_2019",
-    "TOTAL_2020",
+    "MASCHI_2015",
+    "MASCHI_2016",
+    "MASCHI_2017",
+    "MASCHI_2018",
+    "MASCHI_2019",
+    "MASCHI_2020",
+    "FEMMINE_2015",
+    "FEMMINE_2016",
+    "FEMMINE_2017",
+    "FEMMINE_2018",
+    "FEMMINE_2019",
+    "FEMMINE_2020",
+    "TOTALE_2015",
+    "TOTALE_2016",
+    "TOTALE_2017",
+    "TOTALE_2018",
+    "TOTALE_2019",
+    "TOTALE_2020",
 ]
 
 aggregation_function = dict.fromkeys(cols_to_sum, "sum")
-dfg = df.groupby("NUTS 3").agg(aggregation_function)
+dfg = df.groupby("NOME_PROVINCIA").agg(aggregation_function)
 dfg.to_csv("istat_morti_per_provincia_per_fasce_deta.csv")

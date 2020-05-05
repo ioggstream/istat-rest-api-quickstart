@@ -19,8 +19,10 @@ log = logging.getLogger()
 
 @pytest.fixture()
 def istat():
-    return Request("ISTAT")
-
+    istat = Request("ISTAT")
+    if sdmx.__version__ > '0.9':
+        istat.
+    return istat
 
 def teardown_function():
     f = Path("out.xml")
@@ -43,17 +45,21 @@ def test_get_all_dataflows(istat):
 
 
 def test_get_one_dataflow(istat):
-    dflow = istat.dataflow(resource_id="115_333", agency="IT1", version="1.2")
+    q = dict(resource_id="115_333", agency="IT1", version="1.2")
+    if sdmx.__version__ > '0.9':
+        q.pop('agency', None)
+    dflow = istat.dataflow(**q)
     i_stat_code = next(iter(dflow.datastructure))
     assert i_stat_code == "DCSC_INDXPRODIND_1"
 
 
 def test_data_to_file(istat):
+    q = dict(resource_id="115_333", agency="IT1", params={"startPeriod": "2020"})
+    if sdmx.__version__ > '0.9':
+        q.pop('agency', None)
     # Get data filtering per-period: don't specify version here!
     # GET /SDMXWS/rest/data/115_333/?startPeriod=2019-10
-    res = istat.data(
-        resource_id="115_333", agency="IT1", params={"startPeriod": "2020"}
-    )
+    res = istat.data(**q)
     # dump data to a file
     res.write_source(filename="out.xml")
     assert Path("out.xml").is_file()

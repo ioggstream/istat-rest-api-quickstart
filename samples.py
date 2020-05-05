@@ -5,6 +5,7 @@ Each ISTAT dataset is associated to a dataflow.
 """
 import pandas as pd
 from pandasdmx import Request
+import pandasdmx as sdmx
 import logging
 import csv
 
@@ -45,7 +46,8 @@ def get_dataset(client, query) -> pd.DataFrame:
     # the agency to be present
     if "agency" not in query:
         log.warning("If this query does not succeed, try to add the agency param")
-
+    if sdmx.__version__ > "0.9":
+        query.pop("agency", None)
     res = client.data(**query)
     # Parse the response to data frame
     df = res.write()
