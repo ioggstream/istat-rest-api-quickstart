@@ -49,9 +49,11 @@ def get_dataset(client, query) -> pd.DataFrame:
     if sdmx.__version__ > "0.9":
         query.pop("agency", None)
     res = client.data(**query)
+
     # Parse the response to data frame
-    df = res.write()
-    return df
+    if sdmx.__version__ > "0.9":
+        return sdmx.writer.write(res)
+    return res.write()
 
 
 def flatten_data(df):

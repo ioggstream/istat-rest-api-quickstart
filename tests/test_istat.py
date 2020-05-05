@@ -2,7 +2,7 @@ from pandasdmx import Request
 from pathlib import Path
 import pytest
 import yaml
-
+import pandasdmx as sdmx
 # Show http traces.
 import http.client as http_client
 import logging
@@ -20,10 +20,14 @@ log = logging.getLogger()
 @pytest.fixture()
 def istat():
     istat = Request("ISTAT")
-    if sdmx.__version__ > '0.9':
-        istat.
     return istat
 
+def harn_get_structure(dataflow):
+    if sdmx.__version__ > '0.9':
+        d = dataflow.structure
+    else:
+        d = dataflow.datastructure
+    return next(iter(d))
 def teardown_function():
     f = Path("out.xml")
     if f.is_file():
@@ -49,20 +53,8 @@ def test_get_one_dataflow(istat):
     if sdmx.__version__ > '0.9':
         q.pop('agency', None)
     dflow = istat.dataflow(**q)
-    i_stat_code = next(iter(dflow.datastructure))
+    i_stat_code = harn_get_structure(dflow)
     assert i_stat_code == "DCSC_INDXPRODIND_1"
-
-
-def test_data_to_file(istat):
-    q = dict(resource_id="115_333", agency="IT1", params={"startPeriod": "2020"})
-    if sdmx.__version__ > '0.9':
-        q.pop('agency', None)
-    # Get data filtering per-period: don't specify version here!
-    # GET /SDMXWS/rest/data/115_333/?startPeriod=2019-10
-    res = istat.data(**q)
-    # dump data to a file
-    res.write_source(filename="out.xml")
-    assert Path("out.xml").is_file()
 
 
 def param_queries():

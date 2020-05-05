@@ -84,3 +84,12 @@ queries:
   params:
     startPeriod: 2014-01
     endPeriod: 2014-12
+- label: Metadati associati al dataflow IPI
+  skip: yes
+  url: >-
+    curl -X GET "http://sdmx.istat.it/sdmxws/rest/data/IT1%2C115_333%2C1.2/..N..IND_PROD2?startPeriod=2000-01&endPeriod=2000-10&dimensionAtObservation=TIME_PERIOD&detail=serieskeysonly" -H "accept: application/vnd.sdmx.data+json;version=1.0"
+  query:
+    resource_id: IT1,115_333,1.2
+  params:
+    startPeriod: 2014-01
+    endPeriod: 2014-01
