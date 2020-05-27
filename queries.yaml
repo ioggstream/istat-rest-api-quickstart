@@ -60,7 +60,7 @@ queries:
       startPeriod: 2014-01
       endPeriod: 2014-12
     key:
-      adjustment: "N"
+      ADJUSTMENT: "N"
       IND: "NT_UT_001"
 - label: Metadati associati al dataflow 112_54 (disponibilità letti)
   url: >-

@@ -17,8 +17,6 @@ requests_log.propagate = True
 
 log = logging.getLogger()
 
-queries = Path("tests/test_queries_istat.yaml").read_text()
-queries = yaml.safe_load(queries)["queries"]
 
 
 @pytest.fixture()
@@ -51,10 +49,16 @@ def test_get_dataflow(istat):
     assert next(iter(ret.structure.keys())) == "DCSC_INDXPRODIND_1"
 
 
-def test_get_data(istat):
-    ret = []
-    for qid in queries:
-        if qid.name.startswith("ipi"):
+def param_queries(qid=None):
+    queries = Path("tests/test_queries_istat.yaml").read_text()
+    queries = yaml.safe_load(queries)['queries']
+    if qid:
+        return [x for x in queries if x.get("id", "").startswith(qid)]
+    return queries
 
-            ret.append(harn_query(istat, qid))
+
+@pytest.mark.parametrize("query", param_queries("data-ipi"))
+def test_get_data(istat, query):
+
+    harn_query(istat, qid)
     raise NotImplementedError
