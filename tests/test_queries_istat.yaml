@@ -93,3 +93,7 @@ queries:
   params:
     startPeriod: 2014-01
     endPeriod: 2014-01
+- label: Recupero ATECO_2007 (draft)
+  skip: yes
+  url: >-
+    curl -X GET "http://sdmx.istat.it/sdmxws/rest/codelist/IT1/CL_ATECO_2007/1.2?references=all&detail=full" -H "accept: application/vnd.sdmx.data+json;version=1.0"
